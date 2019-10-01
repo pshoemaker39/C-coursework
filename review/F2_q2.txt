@@ -1,0 +1,28 @@
+Consider a process running the following program:
+#include <stdlib.h>
+#include <stdio.h>
+int globalInt = 10;
+int main ()
+{
+ int i;
+ for (i = globalInt; i != 0; i--)
+ printf("i = %d\n",i);
+ printf("All done!\n");
+ return(EXIT_SUCCESS);
+}
+Please tell where the following objects are stored in memory.
+Your choices are:
+(a) ROM BIOS (f) .data segment
+(b) kernal Memory (the OS) (g) .bss segment
+(c) shared library memory (h) the heap
+(d) .text segment (i) the stack
+(e) .rodata segment
+Where is:
+1. (4 Points) the memory for variable 'i'?
+--local, heap
+2. (4 Points) the memory for variable 'globalInt'?
+--stack
+3. (4 Points) the for loop?
+--.text file
+4. (4 Points) the code that turns the string "i = %d\n" to "i = 6\n"
+--.text

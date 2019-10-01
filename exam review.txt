@@ -1,0 +1,74 @@
+Optimize Me:
+-pull out string length, programmer
+-i / 8, >>3, compiler
+-x / 32 >>5 (bitwise & i & 31), compiler
+-sum << 2, compiler
+- use registers instead of variables for speed, compiler
+
+
+
+Memory:
+-filePtr
+--local variable, locals exist on stack
+-iPtr
+--malloc goes on heap
+-stringConst
+--.rodata
+-code to open file
+--kernal memory
+
+---ROM BIOS: boot and config peripherials
+---.bss: global vars at zero
+---.text: code
+---.data: global non-zero
+
+
+Processes, Exceptions and Signals:
+ci.c
+
+Threads: 
+-Why take and return void*
+--Type is unknown, represents an address. "Fooling" compiler.
+--Provides type flexibility, 
+--but requires programmer to know to cast back to actual type. 
+
+Why do pthread_cond_t conditions exist?
+--Object has a lock, Wait until object is usable
+
+Question:
+___________________________
+You are writing a multi-agent adventure game.
+There are one or more Player agent objects, each under the
+control of its own user.
+There is an autonomous Dragon agent object, that makes its own
+moves and decisions.
+There is an autonomous Thief agent object, that makes its own
+moves and decisions.
+There is an Environment object, that is passive. Agent objects may
+make changes to it (e.g. pick up a sword, drop a bag-of-gold), but
+the Environment object does not change itself.
+How would you program this with threads?
+Do not write code, but tell:
+I. Which objects should be given their own threads.
+How you would solve the problem of two agents reaching for the
+bag-of-gold at approximately the same time? Only one of them
+should get it.
+___________________________
+
+---Everything but environment should be its own threads
+---Lock and unlock
+
+
+
+
+Why should we use snprintf() instead of sprintf(), strncpy()
+instead of strcpy(), etc.? Seriously, how bad can using sprintf(), strcpy(),
+etc. be?
+--buffer overflow!
+
+
+What does extern mean?
+What does it tell the compiler to do?
+--Share a global variable, tell compiler this value exists somewhere else and linker will find itself.
+
+

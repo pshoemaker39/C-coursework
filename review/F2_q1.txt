@@ -1,0 +1,39 @@
+// PURPOSE: To sort array 'intArray' of length 'intArrayLen'. Has the
+// same effect as 'efficientQuickSort()', but expected to run slower.
+// No return value.
+extern
+void inefficientBubbleSort
+(int intArrayLen,
+ int* intArray
+);
+// I will spare you the irrelevant details
+// PURPOSE: To sort array 'intArray' of length 'intArrayLen'. Has the
+// same effect as 'inefficientBubbleSort()', but expected to run faster.
+// No return value.
+extern
+void efficientQuickSort (int intArrayLen, int* intArray);
+
+// I will spare you the irrelevant details
+// PURPOSE: To harass Computer Systems II students. Computes some arbitrary
+// function of 'intArrayLen' and 'intArray' that I pulled out of my a**.
+// Returns its value.
+
+int optimizeMe (int intArrayLen, int* intArray)
+{
+ int sillySum = 0;
+ int i;
+ inefficientBubbleSort(intArrayLen,intArray);
+ for (i = 0; i < intArrayLen-1; i++)
+ {
+ int diff = intArray[i+1] - intArray[i];
+ if (diff == (i % 16))
+ sillySum += diff * 4;
+ }
+ return(sillySum);
+}
+
+modulus 16, use & to bit mask
+diff * 4, use bit shifting
+remove eqs, never used
+use registers, faster
+

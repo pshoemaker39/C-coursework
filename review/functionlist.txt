@@ -1,0 +1,266 @@
+##################
+#### Pointers ####
+##################
+
+
+
+
+##################
+### MemStorage ###
+##################
+
+.text
+  Code
+.rodata
+  Read-Only consts (e.g.strings)
+.data
+  Global and static vars
+  initialized to other than 0
+.bss
+  Global and static vars that start out 0
+.symtab
+  Symbol table holds names and locations of functions, variables and sections
+.rel.text
+  Relocatable info for .text
+.rel.data
+  Relocatable info for .data
+
+
+##################
+#### Processes ###
+##################
+fork()
+
+/*
+
+int status;
+pid_t childPid;
+int joey;
+int i = 0;
+while ((childPid = waitpid(-1, &status, WNOHANG)) > 0)
+if ((WIFEXITED(status)) && (WEXITSTATUS(status) == EXIT_SUCCESS))
+
+*/
+
+
+##################
+#### SigAction ###
+##################
+struct sigaction sa
+--struct used to store sigaction properties
+
+memset(&sa,'\0',sizeof(struct sigaction))
+--allocate space for sa struct
+--where adrress of sa, fill with '\0', to size of struct sigaction
+
+sa_flags 
+--set which flags to catch with sa handler
+
+void signal_handler (int sig, siginfo_t *infoPtr, void* dataPrt){ some stuff }
+--function to handle signal when called
+--siginfo_t is the address of the sa pointer itself
+--dataPtr not used much
+
+void *sa.sa_handler(int) [simple] || *sa_sigaction(int, siginfo_t, void*) [complex]
+--set equal to signal_handler function 
+
+sigaction(SIGINT, &sa, NULL)
+--passing arguments into the function above
+--SIGINT represents the signal to catch
+--address of the sa struct
+--NULL for dataPtr
+
+sigset_t sa_mask
+--set equal to sigs to allow in handler 
+
+
+/*
+  
+struct sigaction signal;
+memset(&signal, '\0', sizeof(struct sigaction));
+signal.sa_handler = sigChldHandler;
+signal.sa_flags = SA_NOCLDSTOP | SA_RESTART;
+sigaction(SIGCHLD, &signal, NULL);
+
+*/
+
+##################
+#### PThreads ####
+##################
+
+pthread_t 
+--pthread type variable
+
+pthread_create(address of pthread type, NULL, target function, (void*) address of arguments as struct or primitive type)
+--creates new thread to run function
+
+pthread_join(pthread type var, (void**) address to store return value)
+--returns created thread and points to address of function result
+
+pthread_mutex_t 
+--pthread_mutex type variable, requires name only
+
+pthread_mutex_init(address of lock, NULL)
+--takes the address of a lock type and initializes it
+
+pthread_mutex_destroy(address of lock)
+--destroys a lock which was initialized
+
+pthread_mutext_lock(address of lock)
+--blocks thread until lock obtained
+--obtains and blocks others until lock released
+
+pthread_mutext_unlock(address of lock)
+--releases lcok allowing other threads to obtain it
+--do this to release memory back to the os
+
+pthread_cond_t 
+--pthread condition type variable
+
+pthread_cond_init(address of condition type, NULL)
+--initializes a condition to a default value
+
+pthread_cond_destroy(address of condition)
+--destroys a condition variable to free up memory
+
+pthread_cond_wait(address of condition, address of lock)
+--blocks thread until lock released and condition signaled
+--obtains lock afterward
+
+pthread_cond_signal(address of condition)
+--signal one waiting thread that condition is met
+
+pthread_cond_broadcast(address of condition)
+--signal all waiting threads a condition is met
+
+
+
+##################
+#### MemAlloc ####
+##################
+Type pointer = ([type]*) malloc(size type variable number of bytes)
+--typical usage example would be sizeof(int)
+--malloc(sizeof(int)) | malloc(strlen(Pointer) +1)
+
+void free (void* pointer)
+--return memory to system
+
+void* calloc(size type variable number of elements, size of each element)
+--used for arrays
+--EXAMPLE: iPtr = (int*) calloc(NUM_ELEMENTS, sizeof(int)); iPtr[i] = 'some value'
+--also enables pointer arithmetic
+
+void* realloc(void * some malloc'd pointer, size type variable of new alloc)
+--used when mem increase required
+--old mem is freed on completion
+
+
+##################
+#### FileMgmt ####
+##################
+FILE*
+
+fopen(const *char path name, const *char typeptr)
+--typePtr: r, r+, w, w+, a, a+
+--store in local variable
+--returns null if unavailable
+
+fprintf(FILE* filePtr, const char* format)
+--same as fprtinf()
+
+fflush(FILE* filePtr)
+--forces filePtr to disk / screen
+
+fclose(FILE* filePtr)
+--closes file filePtr
+
+feof(FILE* filePtr)
+--returns 0 at end of file
+
+fgets() & int sscanf(const char* source, const char* format)
+
+int strtol(const char*, char**, int)
+--cast string to long, int = base (10)
+
+int stat(const char* path, struct stat* buffer);
+--attributes about file
+
+
+
+##################
+## Sckts Pipes ###
+##################
+pipe(array of pipe ints [2])
+--if this equals 0, pipe can be used, array init'd with PIPE_READ, PIPE_WRITE
+
+write(pipe array index, content, length)
+--used to send data
+
+read(pipe array index, storage target, length)
+--used to read data
+
+open(integer)
+--will open active stdin
+
+close(integer)
+--will close active stdout
+
+dup(fd)
+--takes an argument of file directory type in
+--printf can print to file instead of screen
+
+
+ _____SERVER_____
+socket(AF_INET (domain), SOCK_STREAM (reliable tcp), 0)
+--requests a socket from the OS
+
+bind(socketDescriptor from socket(), (struct sockaddr*) &socketInfo, sizeof(socketInfo))
+--bind socket and port together
+--socketInfo is a struct type sockaddr_in
+--returns an int, -1 if error
+
+
+listen(socketDescriptor, max number of pending clients)
+--define number of clients to queue
+--5 is a good default?
+--returns an int, -1 if error
+
+accept(socketDescriptor, NULL, NULL)
+--wait until a client connects
+
+write()
+--write to server
+
+read()
+--read from server
+
+close()
+--close the socket with the server
+
+
+ _____CLIENT_____
+getaddrinfo()
+--gets the ip address of the server
+
+socket(AF_INET (domain), SOCK_STREAM (reliable tcp), 0)
+--requests a socket from the OS
+
+connect()
+--attempts to connect to the server
+
+write()
+--write to server
+
+read()
+--read from server
+
+close()
+--close the socket with the server
+
+
+
+
+
+
+
+

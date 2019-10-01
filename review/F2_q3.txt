@@ -1,0 +1,31 @@
+4 Points) A parent process fork()ed a child process to create some large
+object. The child process wants to give the object back to the parent. Can
+this easily be done by signals?
+If yes, say how:
+If no, say why not and give an alternative:
+--no but you can create a pointer and update it then send the signal that it has been updated
+--also use a pthread
+
+a.
+(4 Points) A parent process fork()s a child process. The child continues
+running the same program as the parent (it does not do a execl() or
+similar system call). Is the best way that the parent can give a data
+structure created before the fork() to the child by writing it to a file and
+having the child read that file?
+If so, why?
+If not, why not?
+--no the child process will have access to the 
+
+b.
+(4 Points) Let us say you write a program to measure how quick a
+person's fingers are by trapping SIGINT and then asking them to press
+Ctrl-C as rapidly as possible. The SIGINT signal handler increments a global
+counter every time Ctrl-C is typed. After a predefined time it stops and
+prints the global counter divided by the time used.
+What is a fundamental problem with this program?
+--the signal will only be sent once per cycle
+
+c.
+(4 Points) What is a zombie process?
+Are zombie processes bad because they use a lot of CPU time? no they use memory
+How can a good programmer avoid having too many zombie processes? exiting processes

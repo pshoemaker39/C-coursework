@@ -1,0 +1,11 @@
+Built around ./stringLanguage, ex = ./stringLanguage "Hello" ("\"Hello"")
+server is file that requires input
+
+
+doServer() {
+  while(1) 
+  make detached threads
+  no p_thread_join required
+  parent should accept
+  
+}

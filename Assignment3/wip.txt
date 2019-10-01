@@ -1,0 +1,11 @@
+Class OrderList:
+  -c++ class, member variables should be made thread safe
+
+Struct Sandwich:
+  -nextPrt points to next pointer in queue
+  -Sandwichs live inside global Class OrderList
+
+main
+
+need to decrement length somewhere
+set sandwhich pointer to new value in getorder
